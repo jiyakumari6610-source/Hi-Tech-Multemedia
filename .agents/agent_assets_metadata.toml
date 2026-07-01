@@ -1,0 +1,14 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "bK9l2AeDeg-ciIc5wZbK0"
+uri = "file://artifacts/hitech-multimedia/src/assets/about.jpg"
+type = "image"
+title = "cinematic beautiful indian bride wedding photography"
+
+[[outputs]]
+id = "HbVSe16dH94k1fmQeVQhL"
+uri = "file://artifacts/hitech-multimedia/src/assets/mandap.jpg"
+type = "image"
+title = "luxury indian wedding mandap decorations night photography"

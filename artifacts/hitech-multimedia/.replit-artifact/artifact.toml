@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Hi-tech Multimedia"
+version = "1.0.0"
+id = "artifacts/hitech-multimedia"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18704
+
+[services.development]
+run = "pnpm --filter @workspace/hitech-multimedia run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/hitech-multimedia", "run", "build" ]
+publicDir = "artifacts/hitech-multimedia/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18704"
+BASE_PATH = "/"

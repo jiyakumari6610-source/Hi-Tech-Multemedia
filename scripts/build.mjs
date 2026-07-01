@@ -1,1 +1,1 @@
-console.log("pre-built, skipping build step");
+console.log("skip");

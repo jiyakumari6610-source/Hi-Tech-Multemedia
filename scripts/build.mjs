@@ -10,18 +10,14 @@ function run(cmd, cwd = root) {
   execSync(cmd, { stdio: "inherit", cwd });
 }
 
-// 1. Build the shared libs (db, api-zod, api-client-react)
-run("pnpm --filter @workspace/db build 2>/dev/null || true");
-run("pnpm --filter @workspace/api-zod build 2>/dev/null || true");
-run("pnpm --filter @workspace/api-client-react build 2>/dev/null || true");
+run("npm install pnpm");
 
-// 2. Build the Vite frontend
-run("pnpm --filter @workspace/hitech-multimedia run build");
+const pnpm = path.join(root, "node_modules/.bin/pnpm");
 
-// 3. Build the API server
-run("pnpm --filter @workspace/api-server run build");
+run(`${pnpm} install --frozen-lockfile=false`);
+run(`${pnpm} --filter @workspace/hitech-multimedia run build`);
+run(`${pnpm} --filter @workspace/api-server run build`);
 
-// 4. Copy the frontend dist into the API server's public folder
 const frontendDist = path.join(root, "artifacts/hitech-multimedia/dist");
 const apiPublic = path.join(root, "artifacts/api-server/dist/public");
 
@@ -29,4 +25,4 @@ if (existsSync(apiPublic)) rmSync(apiPublic, { recursive: true, force: true });
 mkdirSync(apiPublic, { recursive: true });
 cpSync(frontendDist, apiPublic, { recursive: true });
 
-console.log("\n✅ Build complete — frontend copied into API dist/public");
+console.log("\n✅ Build complete!");

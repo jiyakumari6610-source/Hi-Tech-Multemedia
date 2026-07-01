@@ -45,5 +45,11 @@ if (existsSync(frontendDist)) {
     res.sendFile(path.join(frontendDist, "index.html"));
   });
 }
+// ... existing code ...
 
+app.get('/', (req, res) => {
+  res.send('Hi-Tech Multimedia Server is running!');
+});
+
+export default app;
 export default app;

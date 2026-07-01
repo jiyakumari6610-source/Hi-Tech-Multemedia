@@ -1,1 +1,25 @@
-buildCommand: node scripts/build.mjs
+services:
+  - type: web
+    name: hitech-multimedia
+    runtime: node
+    region: singapore
+    plan: free
+    buildCommand: npx --yes pnpm@9.15.0 install --frozen-lockfile=false && node artifacts/api-server/build.mjs && cp -r artifacts/hitech-multimedia/dist/public artifacts/api-server/dist/public
+    startCommand: node scripts/start.mjs
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: BASE_PATH
+        value: /
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hitech-db
+          property: connectionString
+
+databases:
+  - name: hitech-db
+    databaseName: hitech_multimedia
+    plan: free
+    region: singapore

@@ -9,13 +9,11 @@ function run(cmd, cwd = root) {
   execSync(cmd, { stdio: "inherit", cwd });
 }
 
-// Push DB schema (creates tables if they don't exist, safe to run repeatedly)
 try {
-  run("pnpm --filter @workspace/db run push-force", root);
+  run("node_modules/.bin/drizzle-kit push --force --config lib/db/drizzle.config.ts");
   console.log("✅ DB schema up to date");
 } catch (err) {
-  console.error("⚠️  DB push failed (continuing anyway):", err.message);
+  console.error("⚠️  DB push failed:", err.message);
 }
 
-// Start the API server
-run("node artifacts/api-server/dist/index.mjs", root);
+run("node artifacts/api-server/dist/index.mjs");

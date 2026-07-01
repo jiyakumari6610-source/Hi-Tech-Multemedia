@@ -4,16 +4,15 @@ import { fileURLToPath } from "node:url";
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
-function run(cmd, cwd = root) {
+function run(cmd) {
   console.log(`▶ ${cmd}`);
-  execSync(cmd, { stdio: "inherit", cwd });
+  execSync(cmd, { stdio: "inherit", cwd: root });
 }
 
 try {
   run("node_modules/.bin/drizzle-kit push --force --config lib/db/drizzle.config.ts");
-  console.log("✅ DB schema up to date");
-} catch (err) {
-  console.error("⚠️  DB push failed:", err.message);
+} catch (e) {
+  console.error("DB push failed, continuing:", e.message);
 }
 
 run("node artifacts/api-server/dist/index.mjs");

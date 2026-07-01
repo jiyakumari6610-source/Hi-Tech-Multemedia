@@ -4,7 +4,7 @@ services:
     runtime: node
     region: singapore
     plan: free
-    buildCommand: corepack enable && corepack prepare pnpm@9 --activate && pnpm install --frozen-lockfile=false && node scripts/build.mjs
+    buildCommand: npm install pnpm --prefix /opt/render/project/src && /opt/render/project/src/node_modules/.bin/pnpm install --frozen-lockfile=false && node scripts/build.mjs
     startCommand: node scripts/start.mjs
     envVars:
       - key: NODE_ENV

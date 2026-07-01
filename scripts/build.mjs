@@ -10,15 +10,11 @@ function run(cmd, cwd = root) {
   execSync(cmd, { stdio: "inherit", cwd });
 }
 
-run("npm install pnpm");
+run("npx --yes pnpm@9.15.0 install --frozen-lockfile=false");
+run("npx pnpm@9.15.0 --filter @workspace/hitech-multimedia run build");
+run("npx pnpm@9.15.0 --filter @workspace/api-server run build");
 
-const pnpm = path.join(root, "node_modules/.bin/pnpm");
-
-run(`${pnpm} install --frozen-lockfile=false`);
-run(`${pnpm} --filter @workspace/hitech-multimedia run build`);
-run(`${pnpm} --filter @workspace/api-server run build`);
-
-const frontendDist = path.join(root, "artifacts/hitech-multimedia/dist");
+const frontendDist = path.join(root, "artifacts/hitech-multimedia/dist/public");
 const apiPublic = path.join(root, "artifacts/api-server/dist/public");
 
 if (existsSync(apiPublic)) rmSync(apiPublic, { recursive: true, force: true });

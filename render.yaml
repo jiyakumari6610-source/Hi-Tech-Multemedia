@@ -4,7 +4,7 @@ services:
     runtime: node
     region: singapore
     plan: free
-    buildCommand: npx --yes pnpm@9.15.0 install --frozen-lockfile=false --dev && node artifacts/api-server/build.mjs && cp -r artifacts/hitech-multimedia/dist/public artifacts/api-server/dist/public
+    buildCommand: npx --yes pnpm@9.15.0 install --frozen-lockfile=false && npx pnpm@9.15.0 --filter @workspace/api-server install && node artifacts/api-server/build.mjs && cp -r artifacts/hitech-multimedia/dist/public artifacts/api-server/dist/public
     startCommand: node scripts/start.mjs
     envVars:
       - key: NODE_ENV

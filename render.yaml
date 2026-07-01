@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: hitech-multimedia
+    runtime: node
+    region: singapore
+    plan: free
+    buildCommand: npm install -g pnpm && pnpm install --frozen-lockfile=false && node scripts/build.mjs
+    startCommand: node scripts/start.mjs
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hitech-db
+          property: connectionString
+
+databases:
+  - name: hitech-db
+    databaseName: hitech_multimedia
+    plan: free
+    region: singapore
